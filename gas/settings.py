@@ -110,8 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'gassuperuser@gmail.com'
-EMAIL_HOST_PASSWORD = 'weareready'
+EMAIL_HOST_USER = 'gasgoldvkr@gmail.com'
+EMAIL_HOST_PASSWORD = '24936mega'
 EMAIL_CODE_PERIOD = 24*60*60
 
 # Параметры локализации, интернационализации
