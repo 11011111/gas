@@ -58,38 +58,21 @@ class User(AbstractUser, BaseModelMixin):
 
 
 class Person(BaseModelMixin):
-    native_lang = CharField('Родной язык', max_length=50, default='', blank=True)
     first_name = CharField('Имя', max_length=50)
-    last_name = CharField('Фамилия', max_length=50, default='', blank=True)
+    last_name = CharField('Фамилия', max_length=50)
+    middle_name = CharField('Отчество', max_length=50, default='', blank=True)
     user = OneToOneField(User, verbose_name='Пользователь', on_delete=PROTECT, related_name='person')
 
     @property
     def full_name(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.first_name} {self.last_name} {self.middle_name}'.strip()
 
     @property
     def short_name(self):
-        return f'{self.first_name} {self.last_name[0]}.'
+        return f'{self.first_name} {self.last_name[0]}. {self.middle_name[0]}.'
 
     class Meta:
         verbose_name = _('Персона')
         verbose_name_plural = _('Персоны')
 
 
-class Settings(BaseModelMixin):
-    RU = 'ru'
-    EN = 'en'
-    DE = 'de'
-    FI = 'fi'
-    LANGUAGES = (
-        (RU, "Русский"),
-        (EN, "English"),
-        (DE, "Deutsche"),
-        (FI, "Suomi")
-    )
-    language = CharField('Язык интерфейса', max_length=2, choices=LANGUAGES, default=RU)
-    user = OneToOneField(User, on_delete=PROTECT, related_name='settings')
-
-    class Meta:
-        verbose_name = _('Настройки пользователя')
-        verbose_name_plural = _('Настройки пользователей')

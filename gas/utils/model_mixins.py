@@ -36,11 +36,3 @@ class TimeStampMixin(BaseMixin):
 class BaseModelMixin(TimeStampMixin, UidMixin):
     class Meta:
         abstract = True
-
-
-class Lang(BaseMixin):
-    def get_on_lang(self, lang):
-        return getattr(self, lang)
-
-    class Meta:
-        abstract = True
