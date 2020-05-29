@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 # Register your models here.
-from gas.person.models import User, Person, Settings
+from gas.person.models import User, Person, Station, WorkTime
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 
 
@@ -29,6 +29,12 @@ class UserAdmin(DjangoUserAdmin):
 class PersonAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(Settings)
-class SettingsAdmin(admin.ModelAdmin):
+
+@admin.register(Station)
+class StationAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(WorkTime)
+class WorkTimeAdmin(admin.ModelAdmin):
     pass
