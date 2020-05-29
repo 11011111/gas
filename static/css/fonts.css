@@ -1,0 +1,40 @@
+@font-face {
+    font-family: "MonR";
+    src: url("/static/fonts/Montserrat-Regular.ttf");
+}
+
+@font-face {
+    font-family: "MonBlack";
+    src: url("/static/fonts/Montserrat-Black.ttf");
+}
+
+@font-face {
+    font-family: "MonBold";
+    src: url("/static/fonts/Montserrat-Bold.ttf");
+}
+
+@font-face {
+    font-family: "MonI";
+    src: url("/static/fonts/Montserrat-Italic.ttf");
+}
+
+@font-face {
+    font-family: "MonL";
+    src: url("/static/fonts/Montserrat-Light.ttf");
+}
+
+@font-face {
+    font-family: "MonM";
+    src: url("/static/fonts/Montserrat-Medium.ttf");
+}
+
+@font-face {
+    font-family: "MonT";
+    src: url("/static/fonts/Montserrat-Thin.ttf");
+}
+
+@font-face {
+    font-family: "MonSB";
+    src: url("/static/fonts/Montserrat-SemiBold.ttf");
+}
+

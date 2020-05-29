@@ -1,6 +1,51 @@
 {% extends 'base_app.html' %}
 
 {% block content %}
-    {{ a }}
+    <div class="blockPage">
+    <h2>Новый кандидат</h2>
+        <form action="" class="newOperator">
+            <div class="col-md-6">
+                <label for="last_name">
+                    <span>Фамилия</span>
+                    <input type="text" name="last_name" id="last_name">
+                </label>
+                <label for="first_name">
+                    <span>Имя</span>
+                    <input type="text" name="first_name" id="first_name">
+                </label>
+                <label for="middle_name">
+                    <span>Отчество</span>
+                    <input type="text" name="middle_name" id="middle_name">
+                </label>
+                <label for="birth_date">
+                    <span>Дата рождения</span>
+                    <input type="text" name="birth_date" id="birth_date">
+                </label>
+                 <label for="phone">
+                    <span>Телефон</span>
+                    <input type="text" name="phone" id="phone" >
+                </label>
+
+            </div>
+            <div class="col-md-6">
+                <label for="passport_number">
+                    <span>Серия и номер паспорта</span>
+                    <input type="text" name="passport_number" id="passport_number">
+                </label>
+                <label for="passport_date">
+                    <span>Дата выдачи паспорта</span>
+                    <input type="text" name="passport_date" id="passport_date">
+                </label>
+                 <label for="document_file">
+                    <span>Прикрепить файл</span>
+                    <input type="file" name="document_file" id="document_file">
+                </label>
+                <br>
+                  <label for="send">
+                    <input type="submit" class="button" value="Сохранить" name="send" id="send">
+                </label>
+            </div>
+        </form>
+    </div>
 {% endblock %}
 

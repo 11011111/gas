@@ -1,36 +1,74 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>gas</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/fonts.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">gas</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/words/cards/">Words<span class="sr-only">(current)</span></a>
-            </li>
-            {% if request.user.is_authenticated %}
-            <a href="/auth/logout/" class="btn btn-outline-danger" style="margin-left: 10px">Log out</a>
-            {% else %}
-            <a href="/auth/login/" class="btn btn-success" style="margin-left: 10px">Log in</a>
-            {% endif %}
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <a href="/"><img src="/static/img/logo.png" alt=""></a>
+            </div>
+            <div class="col-lg-9">
+                <div class="profileLink">
+                    {% if request.user.is_authenticated %}
+                    <a href="/auth/logout/" class="btn btn-outline-danger" style="margin-left: 10px">{{ request.user.person.first_name}} | Выйти</a>
+                    {% else %}
+                    <a href="/auth/login/" class="btn btn-success" style="margin-left: 10px">Войти</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
-</nav>
-<div style="width: 100%; height: 70px"></div>
-{% block content %}
-{% endblock %}
+</header>
+<div class="page">
+    <div class="menuLeft">
+        <span class="groupText">Кандидаты</span>
+        <ul class="nav">
+            <li><a href="#">Отправлено в СБ</a></li>
+            <li><a href="#">Отказано</a></li>
+            <li><a href="#">Резерв</a></li>
+        </ul>
+        <span class="groupText">Стажеры</span>
+        <ul class="nav">
+            <li><a href="#">Активные</a></li>
+            <li><a href="#">Не допущены</a></li>
+        </ul>
+        <span class="groupText">Операторы</span>
+        <ul class="nav">
+            <li><a href="#">Активные</a></li>
+            <li><a href="#">Уволеныне</a></li>
+            <li><a href="#">График работы</a></li>
+        </ul>
+        <span class="groupText">Станции</span>
+        <ul class="nav">
+            <li><a href="#">Список станций</a></li>
+        </ul>
+    </div>
+    <div class="info">
+            <div class="search">
+                <span class="searchText">Все кандидаты</span>
+                <form action="" >
+                    <input type="text" name="search" placeholder="Поиск по фамилии"/>
+                </form>
+                <a href="/form/" class="button">+ Кандидат</a>
+            </div>
+            <div class="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+    </div>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

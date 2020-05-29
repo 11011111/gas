@@ -1,8 +1,29 @@
 {% extends 'base_app.html' %}
 
 {% block content %}
-    <h1>Main Page</h1>
     {% if request.user.is_authenticated %}
-        <h3>{{ request.user.person.first_name}}</h3>
+   <table width="100%">
+                <thead>
+                    <tr>
+                        <td>Кандидат</td>
+                        <td>Телефон</td>
+                        <td>Станция</td>
+                        <td>Статус</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Хрусталев М.В.</td>
+                        <td>8 (911) 002-68-56</td>
+                        <td>Девяткино</td>
+                        <td>Активен</td>
+                        <td class="wid30"><a href="/"><img src="/static/img/edit.svg" alt="Редактировать"></a></td>
+                        <td class="wid30"><a href="/"><img src="/static/img/delete.svg" alt="Удалить"></a></td>
+                    </tr>
+
+                </tbody>
+            </table>
     {% endif %}
 {% endblock %}
