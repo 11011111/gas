@@ -2,28 +2,35 @@
 
 {% block content %}
     {% if request.user.is_authenticated %}
-   <table width="100%">
-                <thead>
-                    <tr>
-                        <td>Кандидат</td>
-                        <td>Телефон</td>
-                        <td>Станция</td>
-                        <td>Статус</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Хрусталев М.В.</td>
-                        <td>8 (911) 002-68-56</td>
-                        <td>Девяткино</td>
-                        <td>Активен</td>
-                        <td class="wid30"><a href="/"><img src="/static/img/edit.svg" alt="Редактировать"></a></td>
-                        <td class="wid30"><a href="/"><img src="/static/img/delete.svg" alt="Удалить"></a></td>
-                    </tr>
-
-                </tbody>
-            </table>
+        <table width="100%">
+            <thead>
+            <tr>
+                <td>Кандидат</td>
+                <td>Телефон</td>
+                <td>Станция</td>
+                <td>Статус</td>
+                <td></td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for person in persons %}
+            <tr>
+                <td>{{ person.short_name}}</td>
+                <td>{{ person.phone}}</td>
+                <td>{{ person.station.name }}</td>
+                <td>{{ person.get_status_display }}</td>
+                <td class="wid30"><a href="/"><img src="/static/img/edit.svg" alt="Редактировать"></a></td>
+                <td class="wid30"><a href="/"><img src="/static/img/delete.svg" alt="Удалить"></a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">
+                    Нет данных
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 {% endblock %}

@@ -66,7 +66,7 @@ class Person(BaseModelMixin):
 
     birth_date = DateField('Дата рождения', null=True, blank=True)
 
-    user = OneToOneField(User, verbose_name='Пользователь', on_delete=PROTECT, related_name='person')
+    user = OneToOneField(User, verbose_name='Пользователь', on_delete=PROTECT, related_name='person', null=True, blank=True)
 
     passport_number = CharField('Паспорт', max_length=10, null=True, blank=True, unique=True)
     passport_date = DateField('Дата выдачи паспорта', null=True, blank=True)
@@ -99,7 +99,7 @@ class Person(BaseModelMixin):
         ext = filename.rsplit('.', 1)[1]
         if ext.lower() in valid_extensions:
             raise ValidationError('Unsupported file extension.')
-        return f'documents/{self.user.email.split("@")[0].lower()}.{ext}'
+        return f'documents/{self.passport_number.lower()}.{ext}'
 
     document_file = FileField(upload_to=save_to_path, verbose_name='Файл документа', null=True, blank=True)
 

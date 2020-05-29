@@ -168,4 +168,8 @@ label select{
      font-size: 12px;
     padding: 8px 15px;
     width: 200px;
+    outline: none;
+}
+label input[name=button]{
+
 }

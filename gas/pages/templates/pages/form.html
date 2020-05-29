@@ -3,7 +3,8 @@
 {% block content %}
     <div class="blockPage">
     <h2>Новый кандидат</h2>
-        <form action="" class="newOperator">
+        <form action="/form/" method="post" class="newOperator" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="col-md-6">
                 <label for="last_name">
                     <span>Фамилия</span>

@@ -32,7 +32,7 @@ class PersonAdmin(admin.ModelAdmin):
 
 @admin.register(Station)
 class StationAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'address', 'phone')
 
 
 @admin.register(WorkTime)
