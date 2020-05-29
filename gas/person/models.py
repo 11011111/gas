@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.core.exceptions import ValidationError
-from django.db.models import CharField, OneToOneField, PROTECT, BooleanField, EmailField, ForeignKey, FileField
+from django.db.models import CharField, OneToOneField, PROTECT, BooleanField, EmailField, ForeignKey, FileField, \
+    DateField, DateTimeField
 from django.utils.translation import gettext_lazy as _
 
 from gas.utils.model_mixins import BaseModelMixin
@@ -48,8 +49,7 @@ class User(AbstractUser, BaseModelMixin):
     # Поля имя и фамилии переносятся в модель Person
     first_name = None
     last_name = None
-    # username пока не используется
-    username = CharField(_('username'), max_length=30, blank=True, null=True)
+    username = None
 
     def __str__(self):
         return self.email
@@ -63,23 +63,33 @@ class Person(BaseModelMixin):
     first_name = CharField('Имя', max_length=50)
     last_name = CharField('Фамилия', max_length=50)
     middle_name = CharField('Отчество', max_length=50, default='', blank=True)
+
+    birth_date = DateField('Дата рождения', null=True, blank=True)
+
     user = OneToOneField(User, verbose_name='Пользователь', on_delete=PROTECT, related_name='person')
 
-    passport_number = CharField('Паспорт', max_length=10, null=True, blank=True)
+    passport_number = CharField('Паспорт', max_length=10, null=True, blank=True, unique=True)
+    passport_date = DateField('Дата выдачи паспорта', null=True, blank=True)
 
-    WORKED = 'Работает'
-    FIRED = 'Уволен'
-    CANDIDATE = 'Кандидат'
-    REFUSED = 'Отклонен'
+    phone = CharField('Телефон', max_length=15, null=True, blank=True)
+
+    WORKED = 'worked'
+    FIRED = 'fired'
+    CANDIDATE = 'candidate'
+    REFUSED = 'refused'
+    APPROVED = 'approved'
+    RESERVE = 'reserve'
 
     STATUSES = (
         (WORKED, 'Работает'),
         (FIRED, 'Уволен'),
         (CANDIDATE, 'Кандидат'),
         (REFUSED, 'Отклонен'),
+        (APPROVED, 'Проверен'),
+        (RESERVE, 'В резерве'),
     )
 
-    status = CharField('Статус', max_length=10, null=True, blank=True)
+    status = CharField('Статус', choices=STATUSES, max_length=10, null=True, blank=True)
 
     station = ForeignKey('Station', verbose_name='Станция', on_delete=PROTECT, related_name='persons', null=True,
                          blank=True)
@@ -101,16 +111,42 @@ class Person(BaseModelMixin):
     def short_name(self):
         return f'{self.first_name} {self.last_name[0]}. {self.middle_name[0]}.'
 
+    def __str__(self):
+        return f"{self.full_name} ({self.passport_number})"
+
+
     class Meta:
         verbose_name = _('Персона')
         verbose_name_plural = _('Персоны')
 
 
 class Station(BaseModelMixin):
-    address = CharField('Адрес', max_length=150)
-    phone = CharField('Телефон', max_length=15)
+    name = CharField('Название', max_length=150, unique=True)
+    address = CharField('Адрес', max_length=150, unique=True)
+    phone = CharField('Телефон', max_length=15, unique=True)
 
+    def __str__(self):
+        return f"{self.name}"
 
     class Meta:
         verbose_name = _('Станция')
         verbose_name_plural = _('Станции')
+
+
+class WorkTime(BaseModelMixin):
+    person = ForeignKey(Person, on_delete=PROTECT, related_name='worktimes')
+    station = ForeignKey('Station', verbose_name='Станция', on_delete=PROTECT, related_name='worktimes', null=True,
+                         blank=True)
+    DTS = DateTimeField('Дата начала работы')
+    DTE = DateTimeField('Дата окончания работы')
+
+    def clean(self):
+        if self.DTS > self.DTE:
+            raise ValidationError(_('Дата начала работы не может быть ранее даты окончания работы '))
+
+    def __str__(self):
+        return f"{self.person} {self.DTS}-{self.DTE}"
+
+    class Meta:
+        verbose_name = _('Дата время работы')
+        verbose_name_plural = _('График работы')
