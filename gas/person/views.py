@@ -124,10 +124,7 @@ class Login(View):
         errors = to_obj()
         form.errors['other'] = other_error
         errors.init(form.errors)
-        if request.attempt_enter < 5:
-            return render(request, 'person/login.html', locals())
-        else:
-            return render(request, 'person/reset_password.html', locals())
+        return render(request, 'person/login.html', locals())
 
 
 class Logout(View):

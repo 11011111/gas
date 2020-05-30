@@ -10,7 +10,6 @@
                 <td>Станция</td>
                 <td>Статус</td>
                 <td></td>
-                <td></td>
             </tr>
             </thead>
             <tbody>
@@ -20,8 +19,7 @@
                 <td>{{ person.phone}}</td>
                 <td>{{ person.station.name }}</td>
                 <td>{{ person.get_status_display }}</td>
-                <td class="wid30"><a href="/"><img src="/static/img/edit.svg" alt="Редактировать"></a></td>
-                <td class="wid30"><a href="/"><img src="/static/img/delete.svg" alt="Удалить"></a></td>
+                <td class="wid30"><a href="/profile/{{ person.id }}/"><img src="/static/img/edit.svg" alt="Редактировать"></a></td>
             </tr>
             {% empty %}
             <tr>

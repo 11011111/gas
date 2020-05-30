@@ -56,10 +56,6 @@ class User(AbstractUser, BaseModelMixin):
         if self.is_superuser: return True
         return 'Служба безопасности' in self.groups.all().values_list('name', flat=True)
 
-    @property
-    def in_group_staff_department(self):
-        if self.is_superuser: return True
-        return 'Отдел кадров' in self.groups.all().values_list('name', flat=True)
 
     @property
     def in_group_managers(self):

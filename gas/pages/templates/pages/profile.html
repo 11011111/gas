@@ -1,1 +1,60 @@
+{% extends 'base_app.html' %}
 {{ person.full_name }}
+{% block content %}
+    <div class="blockPage">
+    <h2>Редактирование | {{ person.full_name }}</h2>
+        <form action="/profile/{{ person.id }}/" method="post" class="newOperator" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-md-6">
+                <label for="last_name">
+                    <span>Фамилия</span>
+                    <input type="text" name="last_name" readonly value="{{ person.last_name }}" id="last_name">
+                </label>
+                <label for="first_name">
+                    <span>Имя</span>
+                    <input type="text" name="first_name" readonly value="{{ person.first_name }}" id="first_name">
+                </label>
+                <label for="middle_name">
+                    <span>Отчество</span>
+                    <input type="text" name="middle_name" readonly value="{{ person.middle_name }}" id="middle_name">
+                </label>
+                <label for="birth_date">
+                    <span>Дата рождения</span>
+                    <input type="date" name="birth_date" readonly value="{{ person.birth_date | date:'d.m.Y'  }}" id="birth_date">
+                </label>
+                 <label for="phone">
+                    <span>Телефон</span>
+                    <input type="text" name="phone" value="{{ person.phone }}" id="phone" >
+                </label>
+                <label for="status">
+                    <span>Телефон</span>
+                    <select name="status" id="status">
+                        {% for status in person.STATUSES %}
+                            <option value="{{ status.0 }}" {% if person.status == status.0 %}selected{% endif %}>{{ status.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+
+            </div>
+            <div class="col-md-6">
+                <label for="passport_number">
+                    <span>Серия и номер паспорта</span>
+                    <input type="text" name="passport_number" readonly value="{{ person.passport_number }}" id="passport_number">
+                </label>
+                <label for="passport_date">
+                    <span>Дата выдачи паспорта</span>
+                    <input type="date" name="passport_date" readonly value="{{ person.passport_date | date:'d.m.Y' }}" id="passport_date">
+                </label>
+                 <label for="document_file">
+                    <span>Прикрепленный файл</span>
+                     <a href="{ person.document_file }}" id="document_file">Скачать файл</a>
+                </label>
+                <br>
+                  <label for="send">
+                    <input type="submit" class="button" value="Сохранить" name="send" id="send">
+                </label>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+

@@ -170,6 +170,13 @@ label select{
     width: 200px;
     outline: none;
 }
+label input:read-only{
+    background: rgba(187, 187, 187, 0.25);
+    color: rgba(0, 0, 0, 0.48);
+    border: none;
+}
 label input[name=button]{
-
+    border: none;
+    outline: none;
+    border-radius: 3px;
 }

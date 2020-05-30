@@ -46,7 +46,9 @@
         <span class="groupText">Операторы</span>
         <ul class="nav">
             <li><a href="#">Активные</a></li>
+            {% if request.user.in_group_managers %}
             <li><a href="#">Уволеныне</a></li>
+            {% endif %}
             <li><a href="#">График работы</a></li>
         </ul>
         <span class="groupText">Станции</span>
