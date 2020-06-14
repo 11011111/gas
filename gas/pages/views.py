@@ -23,8 +23,9 @@ def form_page(request):
     if request.POST:
         form = NewCandidate(request.POST)
         user = User.objects.get(id=request.user.id)
-        if user.in_staff_department:
-            return no_access(request, 'Нет прав доступа для создания')
+        if user.in_group_staff_department:
+            if not user.is_superuser:
+                return no_access(request, 'Нет прав доступа для создания')
 
         if form.is_valid():
             form.save()
