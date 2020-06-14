@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from gas.pages.forms import NewCandidate
-from gas.person.models import Person
+from gas.person.models import Person, User
 
 
 def no_access(request, error):
@@ -22,7 +22,8 @@ def main_page(request):
 def form_page(request):
     if request.POST:
         form = NewCandidate(request.POST)
-        if request.user.in_staff_department:
+        user = User.objects.get(id=request.user.id)
+        if not user.in_group_staff_department:
             return no_access(request, 'Нет прав доступа для создания')
 
         if form.is_valid():

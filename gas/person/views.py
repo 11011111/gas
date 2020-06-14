@@ -105,6 +105,7 @@ class Login(View):
 
         form = LoginForm(request.POST)
         other_error = []
+        wc = 0
         if form.is_valid():
             w = f'wrong_{form.cleaned_data["email"]}'
             wc = cache.get(w) or 0
@@ -124,7 +125,7 @@ class Login(View):
         errors = to_obj()
         form.errors['other'] = other_error
         errors.init(form.errors)
-        if request.attempt_enter < 5:
+        if wc < 5:
             return render(request, 'person/login.html', locals())
         else:
             return render(request, 'person/reset_password.html', locals())
