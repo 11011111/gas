@@ -1,8 +1,11 @@
+from datetime import datetime
+
 from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from gas.pages.forms import NewCandidate, StationForm
-from gas.person.models import Person, User, Station
+from gas.person.models import Person, User, Station, WorkTime
+from datetime import timedelta 
 
 
 def no_access(request, error):
@@ -71,6 +74,33 @@ def stations_view_detail(request, uid=None):
             form.save()
             return redirect('/stations/')
         
+    return render(request, 'pages/station_detail.html', locals())
+
+
+@login_required
+def work_time_view(request):
+    page_name = 'График работы'
+    today = datetime.now()
+    dates = [today + timedelta(days=d) for d in range(14)]
+    stations = Station.objects.all()
+    work_times = WorkTime.objects.all()
+    return render(request, 'pages/work_time.html', locals())
+
+
+@login_required
+def work_time_view_detail(request, uid=None):
+    page_name = 'Редактирование графика'
+    station = None
+
+    if uid and (station := Station.objects.filter(id=uid)):
+        station = station.first()
+
+    if request.POST:
+        form = WorkTime(request.POST, instance=station) if station else StationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/stations/')
+
     return render(request, 'pages/station_detail.html', locals())
 
 

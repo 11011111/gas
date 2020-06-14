@@ -124,7 +124,7 @@ class Person(BaseModelMixin):
 
     @property
     def short_name(self):
-        return f'{self.first_name} {self.last_name[0]}. {self.middle_name[0]}.'
+        return f'{self.first_name} {self.last_name[0]}.'
 
     def __str__(self):
         return f"{self.full_name} ({self.passport_number})"

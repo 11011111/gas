@@ -1,0 +1,36 @@
+{% extends 'base_app.html' %}
+{% load work_time %}
+
+{% block content %}
+    <table width="100%">
+        <thead>
+        <tr>
+            <td>Дата</td>
+            {% for station in stations %}
+                <td>{{ station.name }}</td>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for date in dates %}
+            <tr>
+                <td>{{ date }}</td>
+                {% for station in stations %}
+                    <td>
+                        {% get_workers station date as wts %}
+                        {% for wt in wts %}
+                            {{ wt.person.short_name }} {{ wt.DTS.time }}-{{ wt.DTE.time }}<br>
+                        {% endfor %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">
+                    Нет данных
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
