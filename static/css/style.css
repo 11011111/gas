@@ -38,8 +38,6 @@ header .profileLink{
     justify-content: flex-end;
     height: 70px;
 }
-
-
 .page{
     display: flex;
     justify-content: flex-start;

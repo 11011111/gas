@@ -1,38 +1,42 @@
 {% extends 'empty.html' %}
 {% block content %}
-    <div class="row" style="height:100vh; width:100vw; background: url('/static/img/backtest3.png') no-repeat; background-size: cover;">
-        <div class="col-lg-4 col-md-4 col-sm-1 col-xs-1"></div>
-        <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8" style="padding-top: 100px">
-            <form action="/auth/login/" method="post">
 
-                <div class="form-group">
-                    <label for="login_email">Email</label>
-                    <input type="email" class="form-control" aria-describedby="emailHelp" id="login_email"
-                           name="email" placeholder="Input your email" value="{% if form.email.value %}{{ form.email.value }}{% endif %}">
-                    <small id="emailHelp" class="form-text text-danger">{% if errors.email %}
+   <section class="bg" id="bg">
+        <div class="login">
+             <div class="loginForm">
+                  <form action="/auth/login/" method="post">
+                       <h1>Добро пожаловать</h1>
+                       <p>Пожалуйтса, пройдите авторизацию </p>
+                       <label for="user_name">
+                            <span>E-mail</span>
+                            <input type="email" name="email" id="user_name" value="{% if form.email.value %}{{ form.email.value }}{% endif %}" placeholder="Введите данные " >
+                     <small id="emailHelp" class="form-text text-danger">{% if errors.email %}
                         {% for error in errors.email %}{{ error }} {% endfor %}
-                    {% endif %} {% if errors.other %}
+                            {% endif %} {% if errors.other %}
                         {% for error in errors.other %}{{ error }} {% endfor %}
-                    {% endif %}
+                        {% endif %}
                     </small>
-                </div>
-                <div class="form-group">
-                    <label for="login_password">Password</label>
-                    <input type="password" class="form-control" aria-describedby="passwordHelp" id="login_password"
-                           name="password" placeholder="And input your password">
-                    <small id="passwordHelp" class="form-text text-danger">{% if errors.password %}
-                        {% for error in errors.password %}{{ error }} {% endfor %}
-                    {% endif %}</small>
-                    <a href="/auth/reset_password/" style="margin-left: 12px">Forgot password?</a>
-                </div>
-
-                {% csrf_token %}
-
-                <input type="submit" class="btn btn-success" value="Log in" style=" width: 100%; margin-top: 30px">
-                <a href="/auth/registration/" class="btn btn-light" style="color: white; background-color: coral; width: 100%; margin-top: 10px">Registration</a>
-            </form>
+                       </label>
+                       <label for="user_pass">
+                            <span>Пароль</span>
+                            <input type="password" name="password" id="user_pass" placeholder="Введите пароль " >
+                           <small id="passwordHelp" class="form-text text-danger">{% if errors.password %}
+                             {% for error in errors.password %}{{ error }} {% endfor %}
+                           {% endif %}</small>
+                       </label>
+                       <p><a href="/auth/reset_password/">Забыли пароль?</a></p>
+                        {% csrf_token %}
+                       <input type="submit" value="Войти" class="button">
+                  </form>
+             </div>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-1"></div>
-    </div>
+   </section>
+
+   <script>
+        $(document).ready(function () {
+             const heightDock = document.documentElement.clientHeight;
+             $('#bg').css('height',heightDock);
+        });
+   </script>
 {% endblock %}
 
