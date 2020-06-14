@@ -28,7 +28,9 @@ def form_page(request):
                 return no_access(request, 'Нет прав доступа для создания')
 
         if form.is_valid():
-            form.save()
+            person = form.save()
+            person.status = Person.CANDIDATE
+            person.save()
         else:
             print(form.errors)
 
