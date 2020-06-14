@@ -17,7 +17,7 @@
                 <td>{{ station.name }}</td>
                 <td>{{ station.address }}</td>
                 <td>{{ station.phone }}</td>
-                <td class="wid30"><a href="/"><img src="/static/img/edit.svg" alt="Редактировать"></a></td>
+                <td class="wid30"><a href="/stations/{{ station.id }}/"><img src="/static/img/edit.svg" alt="Редактировать"></a></td>
                 <td class="wid30"><a href="/"><img src="/static/img/delete.svg" alt="Удалить"></a></td>
             </tr>
         {% empty %}
