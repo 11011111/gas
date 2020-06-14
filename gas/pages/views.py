@@ -13,6 +13,10 @@ def no_access(request, error):
 
 @login_required
 def main_page(request):
+    page_name = 'Кандидаты'
+    page_url = '/'
+    page_new_url = '/form/'
+    button_name = '+ Кандидат'
     persons = Person.objects.filter(status=Person.CANDIDATE)
 
     if request.GET and (q := request.GET.get('search', '')):
@@ -23,7 +27,9 @@ def main_page(request):
 
 @login_required
 def form_page(request):
-    page_name = '+ Кандидат '
+    page_name = 'Кандидат'
+    page_new_url = '/form/'
+    button_name = '+ Кандидат'
     if request.POST:
         form = NewCandidate(request.POST)
         user = User.objects.get(id=request.user.id)
@@ -56,13 +62,16 @@ def profile(request, uid):
 @login_required
 def stations_view(request):
     page_name = 'Станции'
+    page_url = '/stations/'
+    page_new_url = '/stations/new/'
+    button_name = '+ Станция'
     stations = Station.objects.all()
     return render(request, 'pages/stations.html', locals())
 
 
 @login_required
 def stations_view_detail(request, uid=None):
-    page_name = 'Редактирование данных станции'
+    page_name = 'Станции'
     station = None
     
     if uid and (station := Station.objects.filter(id=uid)):
