@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from gas.pages.forms import NewCandidate
-from gas.person.models import Person, User
+from gas.person.models import Person, User, Station
 
 
 def no_access(request, error):
@@ -46,4 +46,10 @@ def profile(request, uid):
         if request.POST:
             pass
     return render(request, 'pages/no_access.html', locals())
+
+
+@login_required
+def stations(request):
+    stations = Station.objects.all()
+    return render(request, 'pages/stations.html', locals())
 
