@@ -1,0 +1,32 @@
+{% extends 'base_app.html' %}
+
+{% block content %}
+    <table width="100%">
+        <thead>
+        <tr>
+            <td>Название</td>
+            <td>Адрес</td>
+            <td>Телефон</td>
+            <td></td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for station in stations %}
+            <tr>
+                <td>{{ station.name }}</td>
+                <td>{{ station.address }}</td>
+                <td>{{ station.phone }}</td>
+                <td class="wid30"><a href="/"><img src="/static/img/edit.svg" alt="Редактировать"></a></td>
+                <td class="wid30"><a href="/"><img src="/static/img/delete.svg" alt="Удалить"></a></td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">
+                    Нет данных
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
