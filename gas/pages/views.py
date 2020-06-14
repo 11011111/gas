@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
-from gas.pages.forms import NewCandidate
+from gas.pages.forms import NewCandidate, StationForm
 from gas.person.models import Person, User, Station
 
 
@@ -20,6 +20,7 @@ def main_page(request):
 
 @login_required
 def form_page(request):
+    page_name = '+ Кандидат '
     if request.POST:
         form = NewCandidate(request.POST)
         user = User.objects.get(id=request.user.id)
@@ -39,6 +40,7 @@ def form_page(request):
 
 @login_required
 def profile(request, uid):
+    page_name = 'Профиль сотрудника'
     if Group.objects.get(name='Служба Безопасности') in request.user.groups.all():
         if person := Person.objects.filter(id=uid):
             person = person.first()
@@ -49,7 +51,26 @@ def profile(request, uid):
 
 
 @login_required
-def stations(request):
+def stations_view(request):
+    page_name = 'Станции'
     stations = Station.objects.all()
     return render(request, 'pages/stations.html', locals())
+
+
+@login_required
+def stations_view_detail(request, uid=None):
+    page_name = 'Редактирование данных станции'
+    station = None
+    
+    if uid and (station := Station.objects.filter(id=uid)):
+        station = station.first()
+    
+    if request.POST:
+        form = StationForm(request.POST, instance=station) if station else StationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/stations/')
+        
+    return render(request, 'pages/station_detail.html', locals())
+
 
