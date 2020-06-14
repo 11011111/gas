@@ -51,7 +51,7 @@
         </ul>
         <span class="groupText">Станции</span>
         <ul class="nav">
-            <li><a href="#">Список станций</a></li>
+            <li><a href="/stations/">Список станций</a></li>
         </ul>
     </div>
     <div class="info">
@@ -60,7 +60,7 @@
                 <form action="" >
                     <input type="text" name="search" placeholder="Поиск по фамилии"/>
                 </form>
-                <a href="/form/" class="button">+ Кандидат</a>
+                <a href="{{ page_new_url }}" class="button">{{ button_name }}</a>
             </div>
             <div class="content">
                 {% block content %}
