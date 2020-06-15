@@ -89,9 +89,13 @@ def stations_view_detail(request, uid=None):
 @login_required
 def work_time_view(request):
     page_name = 'График работы'
-    today = datetime.now()
-    dates = [today + timedelta(days=d) for d in range(14)]
-    stations = Station.objects.all()
+    start_date = datetime.now()if not request.GET.get('dts') else datetime.strptime(request.GET.get('dts'), '%d.%m.%Y')
+    end_date = (start_date + timedelta(days=14)) if not request.GET.get('dte') else datetime.strptime(request.GET.get('dte'), '%d.%m.%Y')
+    
+    dates = [start_date + timedelta(days=d) for d in range((end_date - start_date).days)]
+    all_stations = Station.objects.all()
+    filtered_stations = Station.objects.all() if not request.GET.get('station') else Station.objects.filter(id=request.GET.get('station')) 
+    choised_station = filtered_stations.first() if filtered_stations.count() == 1 else None
     work_times = WorkTime.objects.all()
     return render(request, 'pages/work_time.html', locals())
 

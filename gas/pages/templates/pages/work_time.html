@@ -2,11 +2,23 @@
 {% load work_time %}
 
 {% block content %}
+    <form>
+        <input type="date" name="dts" value="{{ start_date.date|date:"d.m.Y" }}">
+        <input type="date" name="dte" value="{{ end_date.date|date:"d.m.Y" }}">
+        <select name="station">
+            <option></option>
+            {% for station in all_stations %}
+                <option value="{{ station.id }}" {% if choised_station.id == station.id %}
+                        selected{% endif %}>{{ station.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit">
+    </form>
     <table width="100%">
         <thead>
         <tr>
             <td>Дата</td>
-            {% for station in stations %}
+            {% for station in filtered_stations %}
                 <td>{{ station.name }}</td>
             {% endfor %}
         </tr>
@@ -14,8 +26,8 @@
         <tbody>
         {% for date in dates %}
             <tr>
-                <td>{{ date }}</td>
-                {% for station in stations %}
+                <td>{{ date.date }}</td>
+                {% for station in filtered_stations %}
                     <td>
                         {% get_workers station date as wts %}
                         {% for wt in wts %}
